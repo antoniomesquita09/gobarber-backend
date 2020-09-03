@@ -2,14 +2,20 @@ version: '3.1'
 
 services:
   gobarber:
+    container_name: gobarber
     build:
       context: .
     volumes:
       - ./src:/gobarber/src
     ports:
       - 3333:3333
+    depends_on:
+      - db
+    networks:
+      - gobarber-network
 
   db:
+    container_name: gobarber-postgres
     image: postgres
     restart: always
     environment:
@@ -18,3 +24,14 @@ services:
       POSTGRES_DB: gostack_gobarber
     ports:
       - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - gobarber-network
+
+volumes:
+  db-data:
+
+networks:
+  gobarber-network:
+    driver: bridge
