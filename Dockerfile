@@ -8,6 +8,8 @@ RUN yarn --pure-lockfile
 
 COPY ormconfig.docker.json /gobarber/ormconfig.json
 
+COPY tmp /gobarber/tmp/
+
 COPY src /gobarber/src/
 
 EXPOSE 3333
